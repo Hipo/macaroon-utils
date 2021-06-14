@@ -4,7 +4,6 @@
 /// https://www.vadimbulavin.com/swift-atomic-properties-with-property-wrappers/
 
 import Foundation
-import MacaroonUtils
 
 @propertyWrapper
 public final class Atomic<Value> {
