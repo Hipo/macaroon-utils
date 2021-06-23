@@ -9,10 +9,6 @@ public protocol JSONModel:
 
     static var encodingStrategy: JSONEncodingStrategy { get }
     static var decodingStrategy: JSONDecodingStrategy { get }
-
-    func encoded() throws -> Data
-
-    static func decoded(_ data: Data) throws -> Self
 }
 
 extension JSONModel {
@@ -35,7 +31,9 @@ extension JSONModel {
     public static var decodingStrategy: JSONDecodingStrategy {
         return JSONDecodingStrategy()
     }
+}
 
+extension JSONModel {
     public func encoded() throws -> Data {
         return try encoded(Self.encodingStrategy)
     }
