@@ -142,8 +142,10 @@ extension Array where Element == String? {
     public func compound(
         _ separator: String = " "
     ) -> String {
-        let elems = nonNilElements()
-        return elems.joined(separator: separator)
+        return self
+            .compactMap { $0 }
+            .filter { !$0.isEmpty }
+            .joined(separator: separator)
     }
 }
 
@@ -167,6 +169,17 @@ extension Array where Element: Hashable {
     public func uniqueElements() -> [Element] {
         var observer: Set<Element> = []
         return filter { observer.insert($0).inserted }
+    }
+}
+
+extension Optional where Wrapped: Sequence {
+    public func unwrapMap<T>(
+        _ transform: (Wrapped.Element) -> T
+    ) -> [T] {
+        return unwrap(
+            { $0.map(transform) },
+            or: []
+        )
     }
 }
 
