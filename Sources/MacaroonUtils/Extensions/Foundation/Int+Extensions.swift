@@ -1,10 +1,14 @@
 // Copyright © 2019 hipolabs. All rights reserved.
 
 import Foundation
+import UIKit
 
 extension Int {
-    public var obj: NSNumber {
+    public var number: NSNumber {
         return NSNumber(value: self)
+    }
+    public var cgFloat: CGFloat {
+        return CGFloat(self)
     }
 }
 

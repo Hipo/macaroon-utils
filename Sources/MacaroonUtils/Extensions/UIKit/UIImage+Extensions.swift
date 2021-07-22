@@ -4,6 +4,9 @@ import Foundation
 import UIKit
 
 extension UIImage {
+    public var automatic: UIImage {
+        return withRenderingMode(.automatic)
+    }
     public var original: UIImage {
         return withRenderingMode(.alwaysOriginal)
     }
