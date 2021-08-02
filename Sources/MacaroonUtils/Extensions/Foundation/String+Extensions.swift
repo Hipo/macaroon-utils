@@ -117,17 +117,23 @@ extension String {
     }
 
     public func containsOnlyLetters() -> Bool {
-        return containsCharacters(in: .letters)
+        return containsOnlyCharacters(in: .letters)
     }
 
     public func containsOnlyDigits() -> Bool {
-        return containsCharacters(in: .decimalDigits)
+        return containsOnlyCharacters(in: .decimalDigits)
+    }
+
+    public func containsOnlyCharacters(
+        in allowedCharacterSet: CharacterSet
+    ) -> Bool {
+        return rangeOfCharacter(from: allowedCharacterSet.inverted) == nil
     }
 
     public func containsCharacters(
         in allowedCharacterSet: CharacterSet
     ) -> Bool {
-        return rangeOfCharacter(from: allowedCharacterSet.inverted) == nil
+        return rangeOfCharacter(from: allowedCharacterSet) != nil
     }
 }
 
