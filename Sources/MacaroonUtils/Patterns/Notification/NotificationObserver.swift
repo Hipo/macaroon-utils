@@ -4,15 +4,13 @@ import Foundation
 import UIKit
 
 public protocol NotificationObserver: AnyObject {
-    var observations: [NSObjectProtocol] { get set }
+    var notificationObservations: [NSObjectProtocol] { get set }
 }
 
 extension NotificationObserver {
-    public typealias ObservationBlock = (Notification) -> Void
-
     public func observe(
         notification name: Notification.Name,
-        using block: @escaping ObservationBlock
+        using block: @escaping (Notification) -> Void
     ) {
         observe(
             notification: name,
@@ -26,7 +24,7 @@ extension NotificationObserver {
         notification name: Notification.Name,
         by object: Any?,
         on queue: OperationQueue?,
-        using block: @escaping ObservationBlock
+        using block: @escaping (Notification) -> Void
     ) {
         let observer =
             NotificationCenter.default.addObserver(
@@ -35,12 +33,12 @@ extension NotificationObserver {
                 queue: queue,
                 using: block
             )
-        observations.append(observer)
+        notificationObservations.append(observer)
     }
 
     public func unobserveNotifications() {
-        observations.forEach(NotificationCenter.default.removeObserver)
-        observations = []
+        notificationObservations.forEach(NotificationCenter.default.removeObserver)
+        notificationObservations = []
     }
 }
 
@@ -48,7 +46,7 @@ extension NotificationObserver {
 /// Application Life Cycle
 extension NotificationObserver {
     public func observeWhenApplicationWillEnterForeground(
-        using block: @escaping ObservationBlock
+        using block: @escaping (Notification) -> Void
     ) {
         observe(
             notification: UIApplication.willEnterForegroundNotification,
@@ -57,7 +55,7 @@ extension NotificationObserver {
     }
 
     public func observeWhenApplicationDidBecomeActive(
-        using block: @escaping ObservationBlock
+        using block: @escaping (Notification) -> Void
     ) {
         observe(
             notification: UIApplication.didBecomeActiveNotification,
@@ -66,7 +64,7 @@ extension NotificationObserver {
     }
 
     public func observeWhenApplicationWillResignActive(
-        using block: @escaping ObservationBlock
+        using block: @escaping (Notification) -> Void
     ) {
         observe(
             notification: UIApplication.willResignActiveNotification,
@@ -75,7 +73,7 @@ extension NotificationObserver {
     }
 
     public func observeWhenApplicationDidEnterBackground(
-        using block: @escaping ObservationBlock
+        using block: @escaping (Notification) -> Void
     ) {
         observe(
             notification: UIApplication.didEnterBackgroundNotification,
@@ -88,7 +86,7 @@ extension NotificationObserver {
 /// Keyboard Life Cycle
 extension NotificationObserver {
     public func observeWhenKeyboardWillShow(
-        using block: @escaping ObservationBlock
+        using block: @escaping (Notification) -> Void
     ) {
         observe(
             notification: UIResponder.keyboardWillShowNotification,
@@ -97,7 +95,7 @@ extension NotificationObserver {
     }
 
     public func observeWhenKeyboardWillHide(
-        using block: @escaping ObservationBlock
+        using block: @escaping (Notification) -> Void
     ) {
         observe(
             notification: UIResponder.keyboardWillHideNotification,

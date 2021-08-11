@@ -55,7 +55,7 @@ extension Optional {
         return unwrap(keyPath) ?? defaultValue
     }
 
-    public func unwrapConditionally(
+    public func unwrap(
         where predicate: (Wrapped) -> Bool
     ) -> Wrapped? {
         return unwrap { predicate($0) ? $0 : nil }

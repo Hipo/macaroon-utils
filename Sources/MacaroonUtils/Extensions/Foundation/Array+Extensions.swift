@@ -22,7 +22,7 @@ extension Array {
     ) -> Element? {
         return
             index
-                .unwrapConditionally { indices.contains($0) }
+                .unwrap { indices.contains($0) }
                 .unwrap { self[$0] }
     }
 

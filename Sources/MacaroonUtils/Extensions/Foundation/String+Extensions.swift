@@ -9,7 +9,7 @@ extension String {
     ) -> Character? {
         return
             index
-                .unwrapConditionally { indices.contains($0) }
+                .unwrap { indices.contains($0) }
                 .unwrap { self[$0] }
     }
 }
