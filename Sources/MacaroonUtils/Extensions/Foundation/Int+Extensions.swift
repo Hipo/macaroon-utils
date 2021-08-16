@@ -17,3 +17,9 @@ extension Int {
         return NumberFormatter.ordinal.string(from: NSNumber(value: self)) ?? ""
     }
 }
+
+extension Optional where Wrapped == Int {
+    public var someInt: Int {
+        return self ?? 0
+    }
+}
