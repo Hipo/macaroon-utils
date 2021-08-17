@@ -18,27 +18,29 @@ public protocol Publisher: AnyObject {
 }
 
 public protocol WeakPublisher: Publisher
-where Observer: AnyObject {
-    var observations: [ObjectIdentifier: WeakObservation<Observer>] { get set }
+where Observer == WeakObservation.Observer {
+    associatedtype WeakObservation: WeakObservable
+
+    var observations: [ObjectIdentifier: WeakObservation] { get set }
 }
 
 extension WeakPublisher {
     public func add(
-        _ observer: Observer
+        _ observer: WeakObservation.Observer
     ) {
         let id = generateIdentifier(observer)
         observations[id] = WeakObservation(observer)
     }
 
     public func remove(
-        _ observer: Observer
+        _ observer: WeakObservation.Observer
     ) {
         let id = generateIdentifier(observer)
         observations[id] = nil
     }
 
     public func notifyObservers(
-        _ block: (Observer) -> Void
+        _ block: (WeakObservation.Observer) -> Void
     ) {
         observations.forEach {
             if let anObserver = $0.value.observer {
@@ -56,18 +58,20 @@ extension WeakPublisher {
 
 extension WeakPublisher {
     private func generateIdentifier(
-        _ observer: Observer
+        _ observer: WeakObservation.Observer
     ) -> ObjectIdentifier {
-        return ObjectIdentifier(observer)
+        return ObjectIdentifier(observer as AnyObject)
     }
 }
 
-public final class WeakObservation<Observer: AnyObject> {
-    public private(set) weak var observer: Observer?
+public protocol WeakObservable {
+    associatedtype Observer
 
-    public init(
+    /// <warning>
+    /// Must be a weak variable to prevent retain cycle.
+    var observer: Observer? { get }
+
+    init(
         _ observer: Observer
-    ) {
-        self.observer = observer
-    }
+    )
 }

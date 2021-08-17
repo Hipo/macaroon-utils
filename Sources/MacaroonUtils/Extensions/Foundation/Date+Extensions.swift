@@ -2,6 +2,12 @@
 
 import Foundation
 
+extension Date {
+    public static func now() -> Date {
+        return Date()
+    }
+}
+
 extension TimeInterval {
     public func convertToCountdown(
         _ unit: CountdownUnit
