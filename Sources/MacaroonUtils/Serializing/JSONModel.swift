@@ -88,4 +88,6 @@ extension Array: JSONModel where Element: JSONModel {
     }
 }
 
-public struct NoJSONModel: JSONModel { }
+public struct NoJSONModel: JSONModel {
+    public init() {}
+}
