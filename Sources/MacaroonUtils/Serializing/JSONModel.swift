@@ -73,18 +73,11 @@ extension JSONModel {
 }
 
 extension Array: JSONModel where Element: JSONModel {
-    public func encoded() throws -> Data {
-        return try encoded(Element.encodingStrategy)
+    public static var encodingStrategy: JSONEncodingStrategy {
+        return Element.encodingStrategy
     }
-
-    public static func decoded(
-        _ data: Data
-    ) throws -> Self {
-        return
-            try decoded(
-                data,
-                using: Element.decodingStrategy
-            )
+    public static var decodingStrategy: JSONDecodingStrategy {
+        return Element.decodingStrategy
     }
 }
 
