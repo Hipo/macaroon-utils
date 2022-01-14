@@ -19,7 +19,6 @@ open class HIPDevice: Printable {
     public let model: String
     public let locale: Locale
     public let vendorIdentifier: String
-    public let hasNotch: Bool
 
     public init() {
         let processInfo = ProcessInfo.processInfo
@@ -116,17 +115,9 @@ open class HIPDevice: Printable {
                 userDefaults.synchronize()
             }
         }
-
-        if let window = UIApplication.shared.windows.last {
-            hasNotch = window.safeAreaInsets.bottom > 0
-        } else {
-            hasNotch = false
-        }
         #else
         /// <todo>
         vendorIdentifier = ""
-
-        hasNotch = false
         #endif
     }
 }
