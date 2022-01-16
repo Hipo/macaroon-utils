@@ -50,3 +50,13 @@ extension CGSize {
         return width / height
     }
 }
+
+extension CGSize {
+    public func ceil() -> CGSize {
+        return CGSize(width: width.ceil(), height: height.ceil())
+    }
+    
+    public func float() -> CGSize {
+        return CGSize(width: width.float(), height: height.float())
+    }
+}
