@@ -7,10 +7,9 @@ extension String {
     public subscript(
         safe index: Index?
     ) -> Character? {
-        return
-            index
-                .unwrap { indices.contains($0) }
-                .unwrap { self[$0] }
+        return index
+            .unwrap { indices.contains($0) }
+            .unwrap { self[$0] }
     }
 }
 
@@ -18,17 +17,14 @@ extension String {
     public subscript(
         r: NSRange
     ) -> String {
-        let start =
-            index(
-                startIndex,
-                offsetBy: r.location
-            )
-        let end =
-            index(
-                start,
-                offsetBy: r.length
-            )
-
+        let start = index(
+            startIndex,
+            offsetBy: r.location
+        )
+        let end = index(
+            start,
+            offsetBy: r.length
+        )
         return self[start..<end].string
     }
 
@@ -68,40 +64,36 @@ extension String {
     public func without<T: StringProtocol>(
         _ string: T
     ) -> String {
-        return
-            replacingOccurrences(
-                of: string,
-                with: ""
-            )
+        return replacingOccurrences(
+            of: string,
+            with: ""
+        )
     }
 
     public func without(
         prefix: String
     ) -> String {
-        return
-            hasPrefix(prefix)
-                ? dropFirst(prefix.count).string
-                : self
+        return hasPrefix(prefix)
+            ? dropFirst(prefix.count).string
+            : self
     }
 
     public func without(
         suffix: String
     ) -> String {
-        return
-            hasSuffix(suffix)
-                ? dropLast(suffix.count).string
-                : self
+        return hasSuffix(suffix)
+            ? dropLast(suffix.count).string
+            : self
     }
 
     public func replacingCharacters(
         in range: NSRange,
         with replacement: String
     ) -> String {
-        return
-            (self as NSString).replacingCharacters(
-                in: range,
-                with: replacement
-            )
+        return (self as NSString).replacingCharacters(
+            in: range,
+            with: replacement
+        )
     }
 }
 
@@ -109,11 +101,10 @@ extension String {
     public func containsCaseInsensitive(
         _ string: String
     ) -> Bool {
-        return
-            range(
-                of: string,
-                options: .caseInsensitive
-            ) != nil
+        return range(
+            of: string,
+            options: .caseInsensitive
+        ) != nil
     }
 
     public func containsOnlyLetters() -> Bool {
@@ -134,6 +125,14 @@ extension String {
         in allowedCharacterSet: CharacterSet
     ) -> Bool {
         return rangeOfCharacter(from: allowedCharacterSet) != nil
+    }
+}
+
+extension String {
+    public func hasAnyPrefix(
+        _ prefixes: [String]
+    ) -> Bool {
+        return prefixes.contains(where: hasPrefix)
     }
 }
 
