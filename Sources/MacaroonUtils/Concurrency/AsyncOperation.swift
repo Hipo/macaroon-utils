@@ -24,7 +24,7 @@ open class AsyncOperation: Operation {
             willChangeValue(forKey: state.rawValue)
             willChangeValue(forKey: newValue.rawValue)
 
-            $atomicState.modify { $0 = newValue }
+            $atomicState.mutate { $0 = newValue }
 
             didChangeValue(forKey: state.rawValue)
             didChangeValue(forKey: newValue.rawValue)

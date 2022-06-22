@@ -152,6 +152,12 @@ extension String {
     }
 }
 
+extension String: LocalizedError {
+    public var errorDescription: String? {
+        return self
+    }
+}
+
 extension Substring {
     public var string: String {
         return String(self)

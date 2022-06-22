@@ -138,17 +138,6 @@ extension Array {
     }
 }
 
-extension Array where Element == String? {
-    public func compound(
-        _ separator: String = " "
-    ) -> String {
-        return self
-            .compactMap { $0 }
-            .filter { !$0.isEmpty }
-            .joined(separator: separator)
-    }
-}
-
 extension Array where Element: Equatable {
     public func element(
         before e: Element
@@ -172,6 +161,17 @@ extension Array where Element: Hashable {
     }
 }
 
+extension Array where Element == String? {
+    public func compound(
+        _ separator: String = " "
+    ) -> String {
+        return self
+            .compactMap { $0 }
+            .filter { !$0.isEmpty }
+            .joined(separator: separator)
+    }
+}
+
 extension Optional where Wrapped: Sequence {
     public func unwrapMap<T>(
         _ transform: (Wrapped.Element) -> T
@@ -186,11 +186,5 @@ extension Optional where Wrapped: Sequence {
 extension Optional where Wrapped: Collection & ExpressibleByArrayLiteral {
     public var someArray: [Wrapped.Element] {
         return (self as? [Wrapped.Element]) ?? []
-    }
-}
-
-extension String: LocalizedError {
-    public var errorDescription: String? {
-        return self
     }
 }
