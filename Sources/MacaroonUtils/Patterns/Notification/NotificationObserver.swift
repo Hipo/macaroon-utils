@@ -36,7 +36,7 @@ extension NotificationObserver {
         notificationObservations.append(observer)
     }
 
-    public func unobserveNotifications() {
+    public func stopObservingNotifications() {
         notificationObservations.forEach(NotificationCenter.default.removeObserver)
         notificationObservations = []
     }

@@ -45,24 +45,40 @@ public func asyncMain(
     afterDuration d: TimeInterval,
     execute: @escaping () -> Void
 ) {
-    DispatchQueue
-        .main
-        .asyncAfter(
-            deadline: DispatchTime.now() + d,
-            execute: execute
-        )
+    /// <note>
+    /// It is more efficien for calling without deadline if duration is zero.
+    if d > 0 {
+        DispatchQueue
+            .main
+            .asyncAfter(
+                deadline: DispatchTime.now() + d,
+                execute: execute
+            )
+    } else {
+        DispatchQueue
+            .main
+            .async(execute: execute)
+    }
 }
 
 public func asyncMain(
     afterDuration d: TimeInterval,
     workItem: DispatchWorkItem
 ) {
-    DispatchQueue
-        .main
-        .asyncAfter(
-            deadline: DispatchTime.now() + d,
-            execute: workItem
-        )
+    /// <note>
+    /// It is more efficien for calling without deadline if duration is zero.
+    if d > 0 {
+        DispatchQueue
+            .main
+            .asyncAfter(
+                deadline: DispatchTime.now() + d,
+                execute: workItem
+            )
+    } else {
+        DispatchQueue
+            .main
+            .async(execute: workItem)
+    }
 }
 
 public func asyncMain<T: AnyObject>(
