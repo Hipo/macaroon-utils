@@ -61,3 +61,11 @@ extension Optional {
         return unwrap { predicate($0) ? $0 : nil }
     }
 }
+
+extension Optional where Wrapped == String {
+    public func unwrapNonEmptyString() -> String? {
+        return unwrap {
+            !$0.isEmpty
+        }
+    }
+}

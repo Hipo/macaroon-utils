@@ -117,7 +117,25 @@ extension Array {
     public mutating func remove(
         where predicate: (Element) -> Bool
     ) -> Element? {
+        removeFirst(where: predicate)
+    }
+
+    @discardableResult
+    public mutating func removeFirst(
+        where predicate: (Element) -> Bool
+    ) -> Element? {
         guard let index = firstIndex(where: predicate) else {
+            return nil
+        }
+
+        return remove(at: index)
+    }
+
+    @discardableResult
+    public mutating func removeLast(
+        where predicate: (Element) -> Bool
+    ) -> Element? {
+        guard let index = lastIndex(where: predicate) else {
             return nil
         }
 
