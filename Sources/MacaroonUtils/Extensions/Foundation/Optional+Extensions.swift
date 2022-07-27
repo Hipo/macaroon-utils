@@ -1,6 +1,7 @@
 // Copyright © Hipolabs. All rights reserved.
 
 import Foundation
+import UIKit
 
 extension Optional {
     public func unwrap<T>(
@@ -64,8 +65,30 @@ extension Optional {
 
 extension Optional where Wrapped == String {
     public func unwrapNonEmptyString() -> String? {
-        return unwrap {
-            !$0.isEmpty
-        }
+        return unwrap { !$0.isEmpty }
+    }
+}
+
+extension Optional where Wrapped == Int {
+    public func unwrapNonZeroInteger() -> Int? {
+        return unwrap { $0 != 0 }
+    }
+}
+
+extension Optional where Wrapped == Double {
+    public func unwrapNonZeroDouble() -> Double? {
+        return unwrap { $0 != 0 }
+    }
+}
+
+extension Optional where Wrapped == Decimal {
+    public func unwrapNonZeroDecimal() -> Decimal? {
+        return unwrap { $0 != 0 }
+    }
+}
+
+extension Optional where Wrapped == CGFloat {
+    public func unwrapNonZeroDouble() -> CGFloat? {
+        return unwrap { $0 != 0 }
     }
 }
