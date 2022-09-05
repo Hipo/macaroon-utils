@@ -113,11 +113,22 @@ extension Array {
 }
 
 extension Array {
-    @discardableResult
     public mutating func remove(
         where predicate: (Element) -> Bool
-    ) -> Element? {
-        removeFirst(where: predicate)
+    ) -> [Element] {
+        var elements: [Element] = []
+        var elementsToRemove: [Element] = []
+        for elem in self {
+            if predicate(elem) {
+                elementsToRemove.append(elem)
+            } else {
+                elements.append(elem)
+            }
+        }
+
+        self = elements
+
+        return elementsToRemove
     }
 
     @discardableResult
@@ -140,19 +151,6 @@ extension Array {
         }
 
         return remove(at: index)
-    }
-
-    public mutating func removeAll(
-        where predicate: (Element) -> Bool
-    ) -> [Element] {
-        var removedElements: [Element] = []
-
-        for (i, elem) in enumerated() where predicate(elem) {
-            let removedElem = remove(at: i)
-            removedElements.append(removedElem)
-        }
-
-        return removedElements
     }
 }
 
