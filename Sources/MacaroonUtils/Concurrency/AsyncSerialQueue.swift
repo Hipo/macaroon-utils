@@ -116,8 +116,15 @@ extension AsyncSerialQueue {
         setExecutingTask(task)
 
         let executableTask = task.map(qos: .userInteractive) {
-            [weak self] in
+            [weak self, weak task] in
             guard let self = self else { return }
+
+            /// <warning>
+            /// The last executing task couldn't be cancelled properly since it had already been
+            /// started at the moment. Thus, the queue will consider it as a ghost task.
+            if let task, task.isCancelled {
+                return
+            }
 
             self.setExecuting(false)
             self.executeNextTask()
@@ -148,8 +155,6 @@ extension AsyncSerialQueue {
 
         setExecuting(false)
         setExecutingTask(nil)
-
-        enqueueFirst(task)
     }
 }
 
